@@ -17,7 +17,7 @@ EOF
 if [[ $MANAGE_FILE ]]; then
 cat <<EOF
 
-addons:
-  heroku-postgresql:hobby-dev
+#addons:
+#  heroku-postgresql:hobby-dev
 EOF
 fi
