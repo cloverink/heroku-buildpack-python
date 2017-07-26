@@ -147,6 +147,9 @@ set -e
 
 mkdir -p $(dirname $PROFILE_PATH)
 
+# Set Up SSH deploy-key.
+source $BIN_DIR/steps/sshkey
+
 # Install Python.
 source $BIN_DIR/steps/python
 
