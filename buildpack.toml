@@ -1,5 +1,5 @@
 [buildpack]
-name = "Python"
+name = "Python (AltSchool Builpack)"
 
   [publish.Ignore]
   files = [
