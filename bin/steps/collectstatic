@@ -28,6 +28,7 @@ if [ ! "$DISABLE_COLLECTSTATIC" ] && [ -f "$MANAGE_FILE" ] && [ "$DJANGO_INSTALL
     set +e
 
     puts-step "$ python $MANAGE_FILE collectstatic --noinput"
+    puts-step "$ python $MANAGE_FILE compress --force"
 
     # Run collectstatic, cleanup some of the noisy output.
     PYTHONPATH=${PYTHONPATH:-.}
