@@ -27,8 +27,8 @@ sp-grep -s django && DJANGO_INSTALLED=1
 if [ ! "$DISABLE_COLLECTSTATIC" ] && [ -f "$MANAGE_FILE" ] && [ "$DJANGO_INSTALLED" ]; then
     set +e
 
-    puts-step "$ python $MANAGE_FILE collectstatic --noinput"
     puts-step "$ python $MANAGE_FILE compress --force"
+    puts-step "$ python $MANAGE_FILE collectstatic --noinput"
 
     # Run collectstatic, cleanup some of the noisy output.
     PYTHONPATH=${PYTHONPATH:-.}
@@ -36,6 +36,9 @@ if [ ! "$DISABLE_COLLECTSTATIC" ] && [ -f "$MANAGE_FILE" ] && [ "$DJANGO_INSTALL
 
     # Create a temporary file for collecting the collectstaic logs.
     COLLECTSTATIC_LOG=$(mktemp)
+
+    python "$MANAGE_FILE" compress --force --traceback 2>&1 | tee "$COLLECTSTATIC_LOG" | sed '/^Post-processed/d;/^Copying/d;/^$/d' | indent
+    COLLECTSTATIC_STATUS="${PIPESTATUS[0]}"
 
     python "$MANAGE_FILE" collectstatic --noinput --traceback 2>&1 | tee "$COLLECTSTATIC_LOG" | sed '/^Post-processed/d;/^Copying/d;/^$/d' | indent
     COLLECTSTATIC_STATUS="${PIPESTATUS[0]}"
